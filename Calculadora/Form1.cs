@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Calculadora
@@ -58,6 +51,8 @@ namespace Calculadora
             else resultado = num1 / num2;
 
             lblResultado.Text = resultado.ToString();
+
+            btSeguir.Enabled  = true;
         }
 
         void TravarBotao()
@@ -69,9 +64,40 @@ namespace Calculadora
                 btIgual.Enabled = true;
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void Label2_Click(object sender, EventArgs e)
         {
             TravarBotao();
         }
+
+        private void Form1_Load(object sender, EventArgs e) //evento q executa o código logo após o forms ser compilado
+        {
+            btSeguir.Enabled = false; //desabilita o botao seguir qnd inicia a calculadora
+            btLimpar.Enabled = false; //desabilita o botao limpar qnd inicia a calculadora
+        }
+        private void btSeguir_Click(object sender, EventArgs e)
+        {
+            // Verificar se a label de resultado tem um valor válido
+            if (double.TryParse(lblResultado.Text, out double resultado))
+            {
+                numOper1.Value = (decimal)resultado;
+            }
+        }
+
+        private void btLimpar_Click(object sender, EventArgs e)
+        {
+            numOper1.Value = 0;
+            numOper2.Value = 0;
+
+            lblResultado.Text = "";
+
+            // Limpar o operador
+            lblOper.Text = "";  // Nenhum operador selecionado
+
+            btSeguir.Enabled = false;
+
+            btIgual.Enabled = false;
+        }
     }
 }
+
+// perguntar sobre "Travar Botao" e sobre a divisão por 0 ainda ocorrer
